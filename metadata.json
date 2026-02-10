@@ -1,0 +1,7 @@
+{
+  "name": "IndiaVisa.io - Simplified e-Visa Solutions",
+  "description": "A premium, user-friendly platform for global travelers to apply for Indian eVisas with expert assistance and a simplified application process.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
