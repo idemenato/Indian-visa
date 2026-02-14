@@ -18,7 +18,7 @@ const Header: React.FC = () => {
               <div className="bg-orange-600 p-2 rounded-lg">
                 <Plane className="h-6 w-6 text-white" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-green-700 bg-clip-text text-transparent">IndiaVisa.io</span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-green-700 bg-clip-text text-transparent">IndiaGoVisa.com</span>
             </Link>
           </div>
           
@@ -68,7 +68,7 @@ const Footer: React.FC = () => (
         <div className="col-span-1 md:col-span-2">
           <div className="flex items-center space-x-2 mb-6">
             <Plane className="h-8 w-8 text-orange-500" />
-            <span className="text-2xl font-bold text-white">IndiaVisa.io</span>
+            <span className="text-2xl font-bold text-white">IndiaGoVisa.com</span>
           </div>
           <p className="max-w-md text-gray-400 leading-relaxed mb-6">
             We are a dedicated visa consultancy service helping travelers worldwide experience the magic of India. 
@@ -102,7 +102,7 @@ const Footer: React.FC = () => (
         </div>
       </div>
       <div className="border-t border-gray-800 pt-8 text-sm text-center">
-        <p>&copy; {new Date().getFullYear()} IndiaVisa.io - Private Agency (Not affiliated with the Indian Government).</p>
+        <p>&copy; {new Date().getFullYear()} IndiaGoVisa.com - Private Agency (Not affiliated with the Indian Government).</p>
       </div>
     </div>
   </footer>

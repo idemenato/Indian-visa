@@ -45,7 +45,7 @@ const LandingPage: React.FC = () => {
       <section id="benefits" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 serif">Why Choose IndiaVisa.io?</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 serif">Why Choose IndiaGoVisa.com?</h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               The official portal can be confusing and often rejects applications for minor errors. We ensure perfection from start to finish.
             </p>
@@ -103,7 +103,7 @@ const LandingPage: React.FC = () => {
                 Hi, I'm Daniela. When I first planned my trip to India from Europe, I spent 6 hours trying to navigate the official visa website. It crashed twice, rejected my photos without explanation, and left me feeling anxious about my trip.
               </p>
               <p className="text-xl mb-10 text-orange-100 leading-relaxed">
-                I realized that travelers need a bridge. That's why I started IndiaVisa.io. We are based in the EU but work with experts globally to ensure your Indian adventure starts with excitement, not paperwork stress.
+                I realized that travelers need a bridge. That's why I started IndiaGoVisa.com. We are based in the EU but work with experts globally to ensure your Indian adventure starts with excitement, not paperwork stress.
               </p>
               <div className="flex items-center space-x-4">
                 <div className="h-1 w-20 bg-orange-400"></div>
