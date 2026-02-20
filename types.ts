@@ -1,4 +1,3 @@
-
 export interface VisaApplication {
   // Step 1: Basic Info
   nationality: string;
@@ -84,7 +83,7 @@ export interface VisaApplication {
   militaryRank: string;
   militaryPosting: string;
 
-  // Step 6: Travel Details (Updated)
+  // Step 6: Travel Details
   placesToBeVisited: string;
   placesToBeVisited2: string;
   hotelBooked: 'Yes' | 'No';
