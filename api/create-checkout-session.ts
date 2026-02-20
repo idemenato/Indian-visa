@@ -12,30 +12,32 @@ const PRICES: Record<string, number> = {
   econference: 6900,
 };
 
-const SERVICE_NAMES: Record<string, string> = {
-  etourist_30: 'e-Tourist Visa (30 Days)',
-  etourist_1y: 'e-Tourist Visa (1 Year)',
-  etourist_5y: 'e-Tourist Visa (5 Years)',
-  ebusiness: 'e-Business Visa',
-  emedical: 'e-Medical Visa',
-  emedical_attendant: 'e-Medical Attendant Visa',
-  econference: 'e-Conference Visa',
-};
-
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
+
   try {
     const { applicationId, visaService, email } = req.body;
     const amount = PRICES[visaService] || 4900;
+
+    const serviceNames: Record<string, string> = {
+      etourist_30: 'e-Tourist Visa (30 Days)',
+      etourist_1y: 'e-Tourist Visa (1 Year)',
+      etourist_5y: 'e-Tourist Visa (5 Years)',
+      ebusiness: 'e-Business Visa',
+      emedical: 'e-Medical Visa',
+      emedical_attendant: 'e-Medical Attendant Visa',
+      econference: 'e-Conference Visa',
+    };
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [{
         price_data: {
           currency: 'usd',
           product_data: {
-            name: `Indian ${SERVICE_NAMES[visaService] || 'e-Visa'}`,
+            name: `Indian ${serviceNames[visaService] || 'e-Visa'}`,
             description: 'IndiaGoVisa.com — Professional visa application service',
           },
           unit_amount: amount,
@@ -48,6 +50,7 @@ export default async function handler(req: any, res: any) {
       success_url: `${process.env.VITE_APP_URL}/#/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.VITE_APP_URL}/#/apply`,
     });
+
     res.json({ url: session.url });
   } catch (error: any) {
     console.error('Stripe error:', error);
