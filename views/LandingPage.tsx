@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Zap, Clock, Users, CheckCircle2, Star, Quote } from 'lucide-react';
+import { ShieldCheck, Zap, Clock, CheckCircle2, Star, Quote } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   return (
@@ -17,7 +16,7 @@ const LandingPage: React.FC = () => {
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-2xl text-white">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight serif">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight" style={{fontFamily: "'Playfair Display', serif"}}>
               Your Journey to India <br/><span className="text-orange-400">Starts Simplified.</span>
             </h1>
             <p className="text-xl mb-10 text-gray-200 leading-relaxed">
@@ -45,29 +44,16 @@ const LandingPage: React.FC = () => {
       <section id="benefits" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 serif">Why Choose IndiaGoVisa.com?</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{fontFamily: "'Playfair Display', serif"}}>Why Choose IndiaGoVisa.com?</h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               The official portal can be confusing and often rejects applications for minor errors. We ensure perfection from start to finish.
             </p>
           </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {[
-              {
-                icon: <ShieldCheck className="h-10 w-10 text-orange-600" />,
-                title: "Error-Free Submission",
-                desc: "Our experts review every detail of your application before it hits the government server."
-              },
-              {
-                icon: <Zap className="h-10 w-10 text-orange-600" />,
-                title: "Simplified Form",
-                desc: "We translated the 8-page government form into a clean, 5-minute experience."
-              },
-              {
-                icon: <Clock className="h-10 w-10 text-orange-600" />,
-                title: "24/7 Expert Support",
-                desc: "Real humans are available to help you via chat, not automated bots."
-              }
+              { icon: <ShieldCheck className="h-10 w-10 text-orange-600" />, title: "Error-Free Submission", desc: "Our experts review every detail of your application before it hits the government server." },
+              { icon: <Zap className="h-10 w-10 text-orange-600" />, title: "Simplified Form", desc: "We translated the 8-page government form into a clean, 5-minute experience." },
+              { icon: <Clock className="h-10 w-10 text-orange-600" />, title: "24/7 Expert Support", desc: "Real humans are available to help you via chat, not automated bots." }
             ].map((benefit, idx) => (
               <div key={idx} className="p-8 rounded-3xl bg-gray-50 hover:bg-orange-50 transition-colors border border-gray-100">
                 <div className="mb-6">{benefit.icon}</div>
@@ -98,7 +84,7 @@ const LandingPage: React.FC = () => {
               </div>
             </div>
             <div className="w-full md:w-1/2 text-white">
-              <h2 className="text-3xl md:text-5xl font-bold mb-8 serif italic">"I've been in your shoes..."</h2>
+              <h2 className="text-3xl md:text-5xl font-bold mb-8 italic" style={{fontFamily: "'Playfair Display', serif"}}>"I've been in your shoes..."</h2>
               <p className="text-xl mb-6 text-orange-100 leading-relaxed">
                 Hi, I'm Daniela. When I first planned my trip to India from Europe, I spent 6 hours trying to navigate the official visa website. It crashed twice, rejected my photos without explanation, and left me feeling anxious about my trip.
               </p>
@@ -118,34 +104,17 @@ const LandingPage: React.FC = () => {
       <section id="pricing" className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 serif">Simple, Transparent Pricing</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{fontFamily: "'Playfair Display', serif"}}>Simple, Transparent Pricing</h2>
             <p className="text-gray-600 text-lg">No hidden costs. One flat service fee + official government fee.</p>
           </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              {
-                type: "30-Day Tourist",
-                govFee: "$10 - $25",
-                serviceFee: "$49",
-                features: ["30 days validity", "Double entry", "24/7 Support", "Photo editing included"]
-              },
-              {
-                type: "1-Year Tourist",
-                govFee: "$40",
-                serviceFee: "$69",
-                recommended: true,
-                features: ["365 days validity", "Multiple entry", "Priority processing", "WhatsApp support"]
-              },
-              {
-                type: "5-Year Tourist",
-                govFee: "$80",
-                serviceFee: "$99",
-                features: ["5 years validity", "Multiple entry", "Free re-submission", "Travel guide included"]
-              }
+              { type: "30-Day Tourist", govFee: "$10 - $25", serviceFee: "$49", features: ["30 days validity", "Double entry", "24/7 Support", "Photo editing included"] },
+              { type: "1-Year Tourist", govFee: "$40", serviceFee: "$69", recommended: true, features: ["365 days validity", "Multiple entry", "Priority processing", "WhatsApp support"] },
+              { type: "5-Year Tourist", govFee: "$80", serviceFee: "$99", features: ["5 years validity", "Multiple entry", "Free re-submission", "Travel guide included"] }
             ].map((plan, idx) => (
-              <div key={idx} className={`bg-white p-10 rounded-3xl shadow-lg border-2 ${plan.recommended ? 'border-orange-600' : 'border-transparent'} relative`}>
-                {plan.recommended && (
+              <div key={idx} className={`bg-white p-10 rounded-3xl shadow-lg border-2 ${(plan as any).recommended ? 'border-orange-600' : 'border-transparent'} relative`}>
+                {(plan as any).recommended && (
                   <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-orange-600 text-white px-4 py-1 rounded-full text-sm font-bold">
                     Most Popular
                   </span>
@@ -169,7 +138,7 @@ const LandingPage: React.FC = () => {
                 </ul>
                 <Link 
                   to="/apply" 
-                  className={`block w-full text-center py-4 rounded-xl font-bold transition-all ${plan.recommended ? 'bg-orange-600 text-white hover:bg-orange-700 shadow-lg' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+                  className={`block w-full text-center py-4 rounded-xl font-bold transition-all ${(plan as any).recommended ? 'bg-orange-600 text-white hover:bg-orange-700 shadow-lg' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
                 >
                   Choose {plan.type}
                 </Link>
@@ -179,7 +148,7 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust Pilot Style Reviews */}
+      {/* Review */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center space-x-1 mb-6">
