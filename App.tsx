@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import LandingPage from './views/LandingPage';
 import VisaForm from './views/VisaForm';
-import { Plane, HelpCircle, FileText, User, Menu, X, CheckCircle } from 'lucide-react';
+import { Plane, Menu, X } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +41,6 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 py-4 px-6 space-y-4 absolute w-full shadow-lg">
           <Link to="/" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>Home</Link>
@@ -74,11 +72,6 @@ const Footer: React.FC = () => (
             We are a dedicated visa consultancy service helping travelers worldwide experience the magic of India. 
             Our mission is to replace governmental complexity with simple, human-centered service.
           </p>
-          <div className="flex space-x-4">
-            <div className="bg-gray-800 p-2 rounded-full cursor-pointer hover:bg-orange-600 transition-colors">
-              <span className="sr-only">Social</span>
-            </div>
-          </div>
         </div>
         <div>
           <h4 className="text-white font-bold mb-6">Services</h4>
