@@ -342,6 +342,12 @@ const VisaForm: React.FC = () => {
                 <label className={lbl}>Re-enter Email ID<span className="text-red-500">*</span></label>
                 <div className="md:col-span-2">
                   <input type="email" name="reEnteredEmail" value={formData.reEnteredEmail || ''} onChange={handleInputChange} className={inp} required />
+                  {formData.reEnteredEmail && formData.email !== formData.reEnteredEmail && (
+                    <p className="text-red-500 text-xs mt-1">Email addresses do not match.</p>
+                  )}
+                  {formData.reEnteredEmail && formData.email === formData.reEnteredEmail && (
+                    <p className="text-green-600 text-xs mt-1">✓ Emails match.</p>
+                  )}
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 items-start gap-4">
@@ -482,7 +488,7 @@ const VisaForm: React.FC = () => {
               <div className={row}><label className={lbl}>State/Province<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="presState" value={formData.presState || ''} onChange={handleInputChange} className={inp} required /></div></div>
               <div className={row}><label className={lbl}>Postal/Zip Code<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="presZip" value={formData.presZip || ''} onChange={handleInputChange} className={inp} required /></div></div>
               <div className={row}><label className={lbl}>Phone No.<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="presPhone" value={formData.presPhone || ''} onChange={handleInputChange} className={inp} required /></div></div>
-              <div className={row}><label className={lbl}>Mobile No.<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="presMobile" value={formData.presMobile || ''} onChange={handleInputChange} className={inp} required /></div></div>
+              <div className={row}><label className={lbl}>Mobile No.<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="presMobile" value={formData.presMobile || ''} onChange={handleInputChange} className={inp} placeholder="e.g. 00421915000000" required /></div></div>
               <div className={row}>
                 <label className={lbl}>Same as permanent address</label>
                 <div className="md:col-span-2 flex items-center space-x-2"><input type="checkbox" name="sameAddress" checked={formData.sameAddress || false} onChange={handleInputChange} className="w-5 h-5 text-orange-600" /><span className="text-sm">Click for same address</span></div>
@@ -510,6 +516,9 @@ const VisaForm: React.FC = () => {
               <div className={row}><label className={lbl}>Nationality<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="motherNationality" value={formData.motherNationality || ''} onChange={handleInputChange} className={inp} required><option value="">Select Nationality</option>{NATIONALITIES.map(n => <option key={n} value={n.toUpperCase()}>{n.toUpperCase()}</option>)}</select></div></div>
               <div className={row}><label className={lbl}>Place of birth<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="motherPlaceOfBirth" value={formData.motherPlaceOfBirth || ''} onChange={handleInputChange} className={inp} required /></div></div>
               <div className={row}><label className={lbl}>Country of birth<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="motherCountryOfBirth" value={formData.motherCountryOfBirth || ''} onChange={handleInputChange} className={inp} required><option value="">Select Country</option>{NATIONALITIES.map(n => <option key={n} value={n.toUpperCase()}>{n.toUpperCase()}</option>)}</select></div></div>
+              <div className="col-span-3 border-t-2 border-gray-300 my-2 pt-2">
+                <p className="text-xs text-gray-500 italic mb-2">The following information is not related to mother's details.</p>
+              </div>
               <div className={row}><label className={lbl}>Marital Status<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="maritalStatus" value={formData.maritalStatus || ''} onChange={handleInputChange} className={inp} required><option value="">Select Marital Status</option>{MARITAL_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}</select></div></div>
               {formData.maritalStatus === 'MARRIED' && (<>
                 <h4 className="font-bold text-orange-600 uppercase text-xs tracking-widest border-b border-orange-100 pb-1 mt-4">Spouse's Details</h4>
