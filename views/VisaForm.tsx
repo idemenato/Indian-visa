@@ -259,14 +259,18 @@ const VisaForm: React.FC = () => {
         }),
       });
 
-      if (!res.ok) throw new Error('Payment session creation failed');
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Payment session creation failed');
+      }
 
       const { url } = await res.json();
       window.location.href = url;
 
     } catch (err: any) {
       console.error('Submit error:', err);
-      setSubmitError('Something went wrong. Please try again or contact support.');
+      const message = err?.message || 'Unknown error';
+      setSubmitError(`${message} Please try again or contact support.`);
       setIsSubmitting(false);
     }
   };
