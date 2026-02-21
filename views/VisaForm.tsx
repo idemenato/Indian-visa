@@ -44,10 +44,19 @@ const VISA_SERVICES = [
   { id: 'etourist_30', label: 'e-TOURIST VISA (for 30 Days)', price: '$49', category: 'eTOURIST VISA' },
   { id: 'etourist_1y', label: 'e-TOURIST VISA (for 1 Year)', price: '$69', category: 'eTOURIST VISA' },
   { id: 'etourist_5y', label: 'e-TOURIST VISA (for 5 Years)', price: '$99', category: 'eTOURIST VISA' },
-  { id: 'ebusiness', label: 'e-BUSINESS VISA', price: '$79', category: null },
   { id: 'emedical', label: 'e-MEDICAL VISA', price: '$79', category: null },
-  { id: 'emedical_attendant', label: 'e-MEDICAL ATTENDANT VISA', price: '$59', category: null },
+  { id: 'ebusiness', label: 'e-BUSINESS VISA', price: '$79', category: null },
   { id: 'econference', label: 'e-CONFERENCE VISA', price: '$69', category: null },
+  { id: 'emedical_attendant', label: 'e-MEDICAL ATTENDANT VISA', price: '$59', category: null },
+  { id: 'eayush', label: 'e-AYUSH VISA', price: '$79', category: null },
+  { id: 'eayush_attendant', label: 'e-AYUSH ATTENDANT', price: '$59', category: null },
+  { id: 'estudent', label: 'e-STUDENT VISA', price: '$69', category: null },
+  { id: 'estudent_dependent', label: 'e-STUDENT DEPENDENT', price: '$69', category: null },
+  { id: 'eentry', label: 'e-ENTRY VISA', price: '$69', category: null },
+  { id: 'efilm', label: 'e-FILM VISA', price: '$79', category: null },
+  { id: 'emountaineering', label: 'e-MOUNTAINEERING VISA', price: '$69', category: null },
+  { id: 'etransit', label: 'e-TRANSIT VISA', price: '$49', category: null },
+  { id: 'eproduction', label: 'e-PRODUCTION INVESTMENT VISA', price: '$79', category: null },
 ];
 
 const INDIA_STATES_DISTRICTS: Record<string, string[]> = {
@@ -439,7 +448,7 @@ const VisaForm: React.FC = () => {
                 <div className={row}><label className={lbl}>Prev. Nationality<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="prevNationality" value={formData.prevNationality || ''} onChange={handleInputChange} className={inp} required><option value="">Select nationality</option>{NATIONALITIES.map(n => <option key={n} value={n.toUpperCase()}>{n.toUpperCase()}</option>)}</select></div></div>
               )}
               <div className={row}>
-                <label className={lbl}>Lived 2+ years in applying country?<span className="text-red-500">*</span></label>
+                <label className={lbl}>Have you lived 2+ years in applying country?<span className="text-red-500">*</span></label>
                 <div className="md:col-span-2 flex items-center space-x-6">
                   <label className="flex items-center space-x-2 cursor-pointer"><input type="radio" name="livedTwoYears" value="Yes" checked={formData.livedTwoYears === 'Yes'} onChange={handleInputChange} className="text-orange-600" /><span>Yes</span></label>
                   <label className="flex items-center space-x-2 cursor-pointer"><input type="radio" name="livedTwoYears" value="No" checked={formData.livedTwoYears === 'No'} onChange={handleInputChange} className="text-orange-600" /><span>No</span></label>
@@ -516,17 +525,15 @@ const VisaForm: React.FC = () => {
               <div className={row}><label className={lbl}>Nationality<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="motherNationality" value={formData.motherNationality || ''} onChange={handleInputChange} className={inp} required><option value="">Select Nationality</option>{NATIONALITIES.map(n => <option key={n} value={n.toUpperCase()}>{n.toUpperCase()}</option>)}</select></div></div>
               <div className={row}><label className={lbl}>Place of birth<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="motherPlaceOfBirth" value={formData.motherPlaceOfBirth || ''} onChange={handleInputChange} className={inp} required /></div></div>
               <div className={row}><label className={lbl}>Country of birth<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="motherCountryOfBirth" value={formData.motherCountryOfBirth || ''} onChange={handleInputChange} className={inp} required><option value="">Select Country</option>{NATIONALITIES.map(n => <option key={n} value={n.toUpperCase()}>{n.toUpperCase()}</option>)}</select></div></div>
-              <div className="col-span-3 border-t-2 border-gray-300 my-2 pt-2">
-                <p className="text-xs text-gray-500 italic mb-2">The following information is not related to mother's details.</p>
-              </div>
-              <div className={row}><label className={lbl}>Marital Status<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="maritalStatus" value={formData.maritalStatus || ''} onChange={handleInputChange} className={inp} required><option value="">Select Marital Status</option>{MARITAL_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}</select></div></div>
+              <div className="col-span-3 border-t-2 border-gray-300 my-4"></div>
+              <div className={row}><label className={lbl}>Applicant's Marital Status<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="maritalStatus" value={formData.maritalStatus || ''} onChange={handleInputChange} className={inp} required><option value="">Select Marital Status</option>{MARITAL_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}</select></div></div>
               {formData.maritalStatus === 'MARRIED' && (<>
                 <h4 className="font-bold text-orange-600 uppercase text-xs tracking-widest border-b border-orange-100 pb-1 mt-4">Spouse's Details</h4>
                 <div className={row}><label className={lbl}>Name<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="spouseName" value={formData.spouseName || ''} onChange={handleInputChange} className={inp} required /></div></div>
                 <div className={row}><label className={lbl}>Nationality<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="spouseNationality" value={formData.spouseNationality || ''} onChange={handleInputChange} className={inp} required><option value="">Select Nationality</option>{NATIONALITIES.map(n => <option key={n} value={n.toUpperCase()}>{n.toUpperCase()}</option>)}</select></div></div>
               </>)}
               <div className={row}>
-                <label className={lbl}>Pakistan ancestry?<span className="text-red-500">*</span></label>
+                <label className={lbl}>Were your parents/grandparents (paternal/maternal) Pakistan Nationals or belong to Pakistan held area?<span className="text-red-500">*</span></label>
                 <div className="md:col-span-2 flex items-center space-x-6">
                   <label className="flex items-center space-x-2 cursor-pointer"><input type="radio" name="pakistanAncestry" value="Yes" checked={formData.pakistanAncestry === 'Yes'} onChange={handleInputChange} className="text-orange-600" /><span>Yes</span></label>
                   <label className="flex items-center space-x-2 cursor-pointer"><input type="radio" name="pakistanAncestry" value="No" checked={formData.pakistanAncestry === 'No'} onChange={handleInputChange} className="text-orange-600" /><span>No</span></label>
