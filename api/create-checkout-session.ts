@@ -47,8 +47,8 @@ export default async function handler(req: any, res: any) {
       mode: 'payment',
       customer_email: email,
       metadata: { applicationId },
-      success_url: `${process.env.VITE_APP_URL}/#/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.VITE_APP_URL}/#/apply`,
+      success_url: `${process.env.APP_URL}/#/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.APP_URL}/#/apply`,
     });
 
     res.json({ url: session.url });

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import LandingPage from './views/LandingPage';
 import VisaForm from './views/VisaForm';
+import SuccessPage from './views/SuccessPage';
 import { Plane, Menu, X } from 'lucide-react';
 
 const Header: React.FC = () => {
@@ -110,6 +111,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/apply" element={<VisaForm />} />
+            <Route path="/success" element={<SuccessPage />} />
           </Routes>
         </main>
         <Footer />
