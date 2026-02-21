@@ -263,7 +263,17 @@ const VisaForm: React.FC = () => {
           places_to_be_visited: formData.placesToBeVisited,
           port_of_exit: formData.portOfExit,
           visited_india_before: formData.visitedIndiaBefore,
+          visited_india_details: formData.visitedIndiaDetails,
+          visited_india_address1: formData.visitedIndiaAddress1,
+          visited_india_address2: formData.visitedIndiaAddress2,
+          visited_india_address3: formData.visitedIndiaAddress3,
+          cities_visited_india: formData.citiesVisitedIndia,
+          last_indian_visa_no: formData.lastIndianVisaNo,
+          last_visa_type: formData.lastVisaType,
+          last_visa_place_of_issue: formData.lastVisaPlaceOfIssue,
+          last_visa_date_of_issue: formData.lastVisaDateOfIssue,
           visa_refused: formData.visaRefused,
+          visa_refused_when_by_whom: formData.visaRefusedDetails,
           countries_visited_10_years: formData.countriesVisited10Years,
           visited_saarc: formData.visitedSaarc,
           ref_name_india: formData.refNameIndia,
@@ -617,9 +627,16 @@ const VisaForm: React.FC = () => {
                   <label className="flex items-center space-x-2 cursor-pointer"><input type="radio" name="visitedIndiaBefore" value="No" checked={formData.visitedIndiaBefore === 'No'} onChange={handleInputChange} className="text-orange-600" /><span>No</span></label>
                 </div>
               </div>
-              {formData.visitedIndiaBefore === 'Yes' && (
-                <div className={row}><label className={lbl}>Visit Details</label><div className="md:col-span-2"><textarea name="visitedIndiaDetails" value={formData.visitedIndiaDetails || ''} onChange={handleInputChange} className={inp} rows={2} /></div></div>
-              )}
+              {formData.visitedIndiaBefore === 'Yes' && (<>
+                <div className={row}><label className={lbl}>Address<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="visitedIndiaAddress1" value={formData.visitedIndiaAddress1 || ''} onChange={handleInputChange} className={inp} required /></div></div>
+                <div className={row}><label className={lbl}>&nbsp;</label><div className="md:col-span-2"><input type="text" name="visitedIndiaAddress2" value={formData.visitedIndiaAddress2 || ''} onChange={handleInputChange} className={inp} /></div></div>
+                <div className={row}><label className={lbl}>&nbsp;</label><div className="md:col-span-2"><input type="text" name="visitedIndiaAddress3" value={formData.visitedIndiaAddress3 || ''} onChange={handleInputChange} className={inp} /></div></div>
+                <div className={row}><label className={lbl}>Cities previously visited in India<span className="text-red-500">*</span></label><div className="md:col-span-2"><textarea name="citiesVisitedIndia" value={formData.citiesVisitedIndia || ''} onChange={handleInputChange} className={inp} rows={2} required /></div></div>
+                <div className={row}><label className={lbl}>Last Indian Visa No/Currently valid Indian Visa No.<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="lastIndianVisaNo" value={formData.lastIndianVisaNo || ''} onChange={handleInputChange} className={inp} required /></div></div>
+                <div className={row}><label className={lbl}>Type of Visa<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="lastVisaType" value={formData.lastVisaType || ''} onChange={handleInputChange} className={inp} required><option value="">Select visa type</option><option>TOURIST</option><option>BUSINESS</option><option>STUDENT</option><option>EMPLOYMENT</option><option>MEDICAL</option><option>CONFERENCE</option><option>TRANSIT</option><option>ENTRY</option><option>OTHER</option></select></div></div>
+                <div className={row}><label className={lbl}>Place of Issue<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="lastVisaPlaceOfIssue" value={formData.lastVisaPlaceOfIssue || ''} onChange={handleInputChange} className={inp} required /></div></div>
+                <div className={row}><label className={lbl}>Date of Issue<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="date" name="lastVisaDateOfIssue" value={formData.lastVisaDateOfIssue || ''} onChange={handleInputChange} className={inp} required /></div></div>
+              </>)}
               <div className={row}>
                 <label className={lbl}>Visa previously refused?</label>
                 <div className="md:col-span-2 flex items-center space-x-6">
@@ -628,7 +645,7 @@ const VisaForm: React.FC = () => {
                 </div>
               </div>
               {formData.visaRefused === 'Yes' && (
-                <div className={row}><label className={lbl}>Details</label><div className="md:col-span-2"><textarea name="visaRefusedDetails" value={formData.visaRefusedDetails || ''} onChange={handleInputChange} className={inp} rows={2} /></div></div>
+                <div className={row}><label className={lbl}>If so, when and by whom (Mention Control No. and date also)<span className="text-red-500">*</span></label><div className="md:col-span-2"><textarea name="visaRefusedDetails" value={formData.visaRefusedDetails || ''} onChange={handleInputChange} className={inp} rows={2} required /></div></div>
               )}
               <div className="bg-blue-600 text-white px-4 py-2 rounded font-bold uppercase text-xs tracking-wider mt-4">Countries Visited (Last 10 Years)</div>
               <div className={row}>
