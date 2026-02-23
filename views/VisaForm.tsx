@@ -109,6 +109,48 @@ const row = "grid grid-cols-1 md:grid-cols-3 items-center gap-4";
 const lbl = "text-sm font-semibold text-gray-700 md:text-right";
 const hint = "text-[10px] text-gray-500 leading-tight";
 
+const SAARC_COUNTRIES = ["AFGHANISTAN","BANGLADESH","BHUTAN","MALDIVES","NEPAL","PAKISTAN","SRI LANKA"];
+const SAARC_YEARS = Array.from({length: 30}, (_, i) => String(new Date().getFullYear() - i));
+
+interface SaarcEntry { country: string; year: string; visits: string; }
+
+const SaarcCountryVisits: React.FC<{ entries: SaarcEntry[]; onChange: (e: SaarcEntry[]) => void; inp: string }> = ({ entries, onChange, inp: inpClass }) => {
+  const addRow = () => onChange([...entries, { country: "", year: "", visits: "" }]);
+  const removeRow = () => { if (entries.length > 1) onChange(entries.slice(0, -1)); };
+  const update = (i: number, field: keyof SaarcEntry, val: string) => {
+    onChange(entries.map((e, idx) => idx === i ? { ...e, [field]: val } : e));
+  };
+  const rows = entries.length > 0 ? entries : [{ country: "", year: "", visits: "" }];
+  return (
+    <div className="md:col-span-3 mt-2">
+      <div className="grid grid-cols-3 gap-3 mb-1 px-1">
+        <span className="text-xs font-semibold text-gray-700">Name of SAARC country<span className="text-red-500">*</span></span>
+        <span className="text-xs font-semibold text-gray-700">Year<span className="text-red-500">*</span></span>
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-semibold text-gray-700">No. of visits<span className="text-red-500">*</span></span>
+          <div className="flex space-x-2">
+            <button type="button" onClick={addRow} className="text-orange-600 hover:text-orange-800 font-bold text-xl leading-none">+</button>
+            <button type="button" onClick={removeRow} className="text-orange-600 hover:text-orange-800 font-bold text-xl leading-none">−</button>
+          </div>
+        </div>
+      </div>
+      {rows.map((entry, i) => (
+        <div key={i} className="grid grid-cols-3 gap-3 mb-2">
+          <select value={entry.country} onChange={e => update(i, "country", e.target.value)} className={inpClass} required>
+            <option value="">Select country</option>
+            {SAARC_COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <select value={entry.year} onChange={e => update(i, "year", e.target.value)} className={inpClass} required>
+            <option value="">Select year</option>
+            {SAARC_YEARS.map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
+          <input type="number" min="1" value={entry.visits} onChange={e => update(i, "visits", e.target.value)} className={inpClass} required />
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const VisaForm: React.FC = () => {
   const [step, setStep] = useState<FormStep>(1);
   const [formData, setFormData] = useState<Partial<VisaApplication>>({
@@ -116,7 +158,7 @@ const VisaForm: React.FC = () => {
     anyOtherPassport: 'No', changedName: false, livedTwoYears: 'No',
     sameAddress: false, pakistanAncestry: 'No', militaryService: 'No',
     hotelBooked: 'No', visitedIndiaBefore: 'No', visaRefused: 'No',
-    visitedSaarc: 'No', countriesVisited10Years: []
+    visitedSaarc: 'No', countriesVisited10Years: [], saarcCountries: [] as SaarcEntry[]
   });
   const [captchaText, setCaptchaText] = useState(generateRandomCaptcha());
   const [captchaInput, setCaptchaInput] = useState('');
@@ -275,7 +317,9 @@ const VisaForm: React.FC = () => {
           visa_refused: formData.visaRefused,
           visa_refused_when_by_whom: formData.visaRefusedDetails,
           countries_visited_10_years: formData.countriesVisited10Years,
+          hotel_address: formData.hotelAddress,
           visited_saarc: formData.visitedSaarc,
+          saarc_countries: formData.saarcCountries,
           ref_name_india: formData.refNameIndia,
           ref_address_india1: formData.refAddressIndia1,
           ref_phone_india: formData.refPhoneIndia,
@@ -534,7 +578,7 @@ const VisaForm: React.FC = () => {
               <div className={row}><label className={lbl}>Phone No.<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="presPhone" value={formData.presPhone || ''} onChange={handleInputChange} className={inp} required /></div></div>
               <div className={row}><label className={lbl}>Mobile No.<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="presMobile" value={formData.presMobile || ''} onChange={handleInputChange} className={inp} placeholder="e.g. 00421915000000" required /></div></div>
               <div className={row}>
-                <label className={lbl}>Same as permanent address</label>
+                <label className={lbl}>Same as present address</label>
                 <div className="md:col-span-2 flex items-center space-x-2"><input type="checkbox" name="sameAddress" checked={formData.sameAddress || false} onChange={handleInputChange} className="w-5 h-5 text-orange-600" /><span className="text-sm">Click for same address</span></div>
               </div>
               <h4 className="font-bold text-orange-600 uppercase text-xs tracking-widest border-b border-orange-100 pb-1 mt-6">Permanent Address</h4>
@@ -617,6 +661,9 @@ const VisaForm: React.FC = () => {
                   <label className="flex items-center space-x-2 cursor-pointer"><input type="radio" name="hotelBooked" value="No" checked={formData.hotelBooked === 'No'} onChange={handleInputChange} className="text-orange-600" /><span>No</span></label>
                 </div>
               </div>
+              {formData.hotelBooked === 'Yes' && (
+                <div className={row}><label className={lbl}>Hotel address<span className="text-red-500">*</span></label><div className="md:col-span-2"><textarea name="hotelAddress" value={formData.hotelAddress || ''} onChange={handleInputChange} className={inp} rows={2} required /></div></div>
+              )}
               <div className={row}><label className={lbl}>Port of Arrival in India</label><div className="md:col-span-2"><span className="font-bold text-gray-800 uppercase bg-gray-100 px-4 py-2 rounded-lg border border-gray-200 block">{formData.portOfArrival || 'NOT SELECTED'}</span></div></div>
               <div className={row}><label className={lbl}>Port of Exit<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="portOfExit" value={formData.portOfExit || ''} onChange={handleInputChange} className={inp} required><option value="">Select exit point</option>{PORTS_OF_EXIT.map(p => <option key={p} value={p}>{p}</option>)}</select></div></div>
               <div className="bg-blue-600 text-white px-4 py-2 rounded font-bold uppercase text-xs tracking-wider mt-4">Previous Visa Details</div>
@@ -628,9 +675,7 @@ const VisaForm: React.FC = () => {
                 </div>
               </div>
               {formData.visitedIndiaBefore === 'Yes' && (<>
-                <div className={row}><label className={lbl}>Address<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="visitedIndiaAddress1" value={formData.visitedIndiaAddress1 || ''} onChange={handleInputChange} className={inp} required /></div></div>
-                <div className={row}><label className={lbl}>&nbsp;</label><div className="md:col-span-2"><input type="text" name="visitedIndiaAddress2" value={formData.visitedIndiaAddress2 || ''} onChange={handleInputChange} className={inp} /></div></div>
-                <div className={row}><label className={lbl}>&nbsp;</label><div className="md:col-span-2"><input type="text" name="visitedIndiaAddress3" value={formData.visitedIndiaAddress3 || ''} onChange={handleInputChange} className={inp} /></div></div>
+                <div className={row}><label className={lbl}>Address<span className="text-red-500">*</span></label><div className="md:col-span-2"><textarea name="visitedIndiaAddress1" value={formData.visitedIndiaAddress1 || ''} onChange={handleInputChange} className={inp} rows={2} required /></div></div>
                 <div className={row}><label className={lbl}>Cities previously visited in India<span className="text-red-500">*</span></label><div className="md:col-span-2"><textarea name="citiesVisitedIndia" value={formData.citiesVisitedIndia || ''} onChange={handleInputChange} className={inp} rows={2} required /></div></div>
                 <div className={row}><label className={lbl}>Last Indian Visa No/Currently valid Indian Visa No.<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="lastIndianVisaNo" value={formData.lastIndianVisaNo || ''} onChange={handleInputChange} className={inp} required /></div></div>
                 <div className={row}><label className={lbl}>Type of Visa<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="lastVisaType" value={formData.lastVisaType || ''} onChange={handleInputChange} className={inp} required><option value="">Select visa type</option><option>TOURIST</option><option>BUSINESS</option><option>STUDENT</option><option>EMPLOYMENT</option><option>MEDICAL</option><option>CONFERENCE</option><option>TRANSIT</option><option>ENTRY</option><option>OTHER</option></select></div></div>
@@ -665,6 +710,21 @@ const VisaForm: React.FC = () => {
                   </div>
                 </div>
               </div>
+              <div className="bg-blue-600 text-white px-4 py-2 rounded font-bold uppercase text-xs tracking-wider mt-4">SAARC Country Visit Details</div>
+              <div className={row}>
+                <label className={lbl}>Have you visited SAARC countries (except your own country) during past 3 years? <span className="text-gray-500 font-normal">(SAARC - Afghanistan, Bangladesh, Bhutan, India, Maldives, Nepal, Pakistan, Sri Lanka)</span><span className="text-red-500">*</span></label>
+                <div className="md:col-span-2 flex items-center space-x-6">
+                  <label className="flex items-center space-x-2 cursor-pointer"><input type="radio" name="visitedSaarc" value="Yes" checked={formData.visitedSaarc === 'Yes'} onChange={handleInputChange} className="text-orange-600" /><span>Yes</span></label>
+                  <label className="flex items-center space-x-2 cursor-pointer"><input type="radio" name="visitedSaarc" value="No" checked={formData.visitedSaarc === 'No'} onChange={handleInputChange} className="text-orange-600" /><span>No</span></label>
+                </div>
+              </div>
+              {formData.visitedSaarc === 'Yes' && (
+                <SaarcCountryVisits
+                  entries={formData.saarcCountries || []}
+                  onChange={(entries) => setFormData(d => ({ ...d, saarcCountries: entries }))}
+                  inp={inp}
+                />
+              )}
               <div className="bg-blue-600 text-white px-4 py-2 rounded font-bold uppercase text-xs tracking-wider mt-4">Reference in India</div>
               <div className={row}><label className={lbl}>Name<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="refNameIndia" value={formData.refNameIndia || ''} onChange={handleInputChange} className={inp} required /></div></div>
               <div className={row}><label className={lbl}>Address<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="refAddressIndia1" value={formData.refAddressIndia1 || ''} onChange={handleInputChange} className={inp} required /></div></div>
