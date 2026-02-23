@@ -499,7 +499,7 @@ const VisaForm: React.FC = () => {
               <h3 className="text-xl font-bold">Personal Details</h3>
             </div>
             <div className="space-y-4 max-w-2xl mx-auto text-sm">
-              <div className={row}><label className={lbl}>Surname</label><div className="md:col-span-2"><input type="text" name="surname" value={formData.surname || ''} onChange={handleInputChange} className={inp} /></div></div>
+              <div className={row}><label className={lbl}>Surname<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="surname" value={formData.surname || ''} onChange={handleInputChange} className={inp} /></div></div>
               <div className={row}><label className={lbl}>Given Name/s<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="givenNames" value={formData.givenNames || ''} onChange={handleInputChange} className={inp} required /></div></div>
               <div className={row}>
                 <label className={lbl}></label>
@@ -516,7 +516,7 @@ const VisaForm: React.FC = () => {
               <div className={row}><label className={lbl}>Date of Birth</label><div className="md:col-span-2"><span className="w-full px-4 py-2 rounded-lg border-gray-300 border bg-gray-100 font-bold block">{formData.dateOfBirth?.split('-').reverse().join('/') || '-'}</span></div></div>
               <div className={row}><label className={lbl}>Town/City of birth<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="townOfBirth" value={formData.townOfBirth || ''} onChange={handleInputChange} className={inp} required /></div></div>
               <div className={row}><label className={lbl}>Country/Region of birth<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="countryOfBirth" value={formData.countryOfBirth || ''} onChange={handleInputChange} className={inp} required><option value="">Select Country</option>{NATIONALITIES.map(n => <option key={n} value={n.toUpperCase()}>{n.toUpperCase()}</option>)}</select></div></div>
-              <div className={row}><label className={lbl}>Citizenship/National Id No.<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="idNumber" value={formData.idNumber || ''} onChange={handleInputChange} className={inp} placeholder="If not applicable type NA" required /></div></div>
+              <div className={row}><label className={lbl}>Citizenship/National ID No.<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="idNumber" value={formData.idNumber || ''} onChange={handleInputChange} className={inp} placeholder="If not applicable type NA" required /></div></div>
               <div className={row}><label className={lbl}>Religion<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="religion" value={formData.religion || ''} onChange={handleInputChange} className={inp} required><option value="">Select Religion</option>{RELIGIONS.map(r => <option key={r} value={r}>{r}</option>)}</select></div></div>
               <div className={row}><label className={lbl}>Visible identification marks<span className="text-red-500">*</span></label><div className="md:col-span-2"><input type="text" name="visibleMarks" value={formData.visibleMarks || ''} onChange={handleInputChange} className={inp} required /></div></div>
               <div className={row}><label className={lbl}>Educational Qualification<span className="text-red-500">*</span></label><div className="md:col-span-2"><select name="educationalQualification" value={formData.educationalQualification || ''} onChange={handleInputChange} className={inp} required><option value="">Select Education</option>{EDUCATIONAL_QUALIFICATIONS.map(e => <option key={e} value={e}>{e}</option>)}</select></div></div>
@@ -802,22 +802,29 @@ const VisaForm: React.FC = () => {
           <div className="space-y-6 animate-in slide-in-from-right-4 duration-300">
             <div className="flex items-center space-x-2 text-orange-600 mb-4"><CheckCircle className="h-6 w-6" /><h3 className="text-xl font-bold">Review & Payment</h3></div>
             <div className="max-w-2xl mx-auto space-y-6">
+              <p className="text-sm text-orange-600 font-medium -mb-2">Please check the accuracy of the data, as incorrect information may result in the rejection of your visa application.</p>
               <div className="bg-gray-50 rounded-2xl p-6 border border-gray-200">
                 <h4 className="font-bold text-lg mb-4">Application Summary</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between"><span className="text-gray-600">Applicant</span><span className="font-semibold">{formData.givenNames} {formData.surname}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-600">Email</span><span className="font-semibold">{formData.email}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-600">Gender</span><span className="font-semibold">{formData.gender}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-600">Date of birth</span><span className="font-semibold">{formData.dateOfBirth}</span></div>
                   <div className="flex justify-between"><span className="text-gray-600">Nationality</span><span className="font-semibold">{formData.nationality}</span></div>
                   <div className="flex justify-between"><span className="text-gray-600">Passport No.</span><span className="font-semibold">{formData.passportNumber}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-600">Passport Type</span><span className="font-semibold">{formData.passportType}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-600">Place of Issue</span><span className="font-semibold">{formData.placeOfIssue}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-600">Date of Issue</span><span className="font-semibold">{formData.dateOfIssue}</span></div>
                   <div className="flex justify-between"><span className="text-gray-600">Visa Type</span><span className="font-semibold">{selectedService?.label}</span></div>
                   <div className="flex justify-between"><span className="text-gray-600">Arrival Date</span><span className="font-semibold">{formData.expectedArrivalDate}</span></div>
-                  <div className="flex justify-between"><span className="text-gray-600">Email</span><span className="font-semibold">{formData.email}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-600">Port of Arrival in India</span><span className="font-semibold">{formData.portOfArrival}</span></div>
                 </div>
                 <div className="border-t border-gray-200 mt-4 pt-4">
                   <div className="flex justify-between items-center">
-                    <span className="font-bold text-lg">Service Fee</span>
+                    <span className="font-bold text-lg">Total</span>
                     <span className="text-2xl font-bold text-orange-600">{selectedService?.price}</span>
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">+ official government fee paid separately upon visa approval</p>
+                  <p className="text-xs text-gray-500 mt-1">(Service fee + official government fee)</p>
                 </div>
               </div>
               <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-sm text-orange-800">
