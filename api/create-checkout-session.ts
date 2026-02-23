@@ -65,8 +65,8 @@ export default async function handler(req: any, res: any) {
       mode: 'payment',
       customer_email: email,
       metadata: { applicationId, visaService, visaName: serviceNames[visaService] || 'e-Visa' },
-      success_url: `https://indian-visa.vercel.app/#/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `https://indian-visa.vercel.app/#/apply`,
+      success_url: `https://indiagovisa.com/#/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `https://indiagovisa.com/#/apply`,
     });
 
     res.json({ url: session.url });
