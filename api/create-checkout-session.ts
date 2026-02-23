@@ -6,10 +6,19 @@ const PRICES: Record<string, number> = {
   etourist_30: 4900,
   etourist_1y: 6900,
   etourist_5y: 9900,
-  ebusiness: 7900,
   emedical: 7900,
-  emedical_attendant: 5900,
+  ebusiness: 7900,
   econference: 6900,
+  emedical_attendant: 5900,
+  eayush: 7900,
+  eayush_attendant: 5900,
+  estudent: 6900,
+  estudent_dependent: 6900,
+  eentry: 6900,
+  efilm: 7900,
+  emountaineering: 6900,
+  etransit: 4900,
+  eproduction: 7900,
 };
 
 export default async function handler(req: any, res: any) {
@@ -25,10 +34,19 @@ export default async function handler(req: any, res: any) {
       etourist_30: 'e-Tourist Visa (30 Days)',
       etourist_1y: 'e-Tourist Visa (1 Year)',
       etourist_5y: 'e-Tourist Visa (5 Years)',
-      ebusiness: 'e-Business Visa',
       emedical: 'e-Medical Visa',
-      emedical_attendant: 'e-Medical Attendant Visa',
+      ebusiness: 'e-Business Visa',
       econference: 'e-Conference Visa',
+      emedical_attendant: 'e-Medical Attendant Visa',
+      eayush: 'e-Ayush Visa',
+      eayush_attendant: 'e-Ayush Attendant',
+      estudent: 'e-Student Visa',
+      estudent_dependent: 'e-Student Dependent',
+      eentry: 'e-Entry Visa',
+      efilm: 'e-Film Visa',
+      emountaineering: 'e-Mountaineering Visa',
+      etransit: 'e-Transit Visa',
+      eproduction: 'e-Production Investment Visa',
     };
 
     const session = await stripe.checkout.sessions.create({
@@ -46,7 +64,7 @@ export default async function handler(req: any, res: any) {
       }],
       mode: 'payment',
       customer_email: email,
-      metadata: { applicationId },
+      metadata: { applicationId, visaService, visaName: serviceNames[visaService] || 'e-Visa' },
       success_url: `https://indian-visa.vercel.app/#/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `https://indian-visa.vercel.app/#/apply`,
     });
