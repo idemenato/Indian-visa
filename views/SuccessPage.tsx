@@ -52,7 +52,7 @@ const SuccessPage: React.FC = () => {
               <Clock className="h-5 w-5 text-orange-600" />
             </div>
             <div>
-              <p className="font-semibold text-gray-800">e-Visa delivered within 24â72 hours</p>
+              <p className="font-semibold text-gray-800">e-Visa delivered within 24Ã¢ÂÂ72 hours</p>
               <p className="text-sm text-gray-500">Your approved e-Visa will be sent to the email address you provided. Processing times depend on the Indian government portal.</p>
             </div>
           </div>
