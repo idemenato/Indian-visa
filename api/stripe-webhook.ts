@@ -25,7 +25,7 @@ async function sendConfirmationEmail(to: string, applicantName: string, visaName
       <p style="color: #fed7aa; margin: 8px 0 0; font-size: 14px;">Indian e-Visa Application Service</p>
     </div>
     <div style="padding: 40px;">
-      <h2 style="color: #1f2937; margin-top: 0;">Payment Confirmed ✓</h2>
+      <h2 style="color: #1f2937; margin-top: 0;">Payment Confirmed â</h2>
       <p style="color: #4b5563; font-size: 15px;">Dear <strong>${applicantName}</strong>,</p>
       <p style="color: #4b5563; font-size: 15px;">
         Thank you for your payment. Your Indian e-Visa application has been successfully submitted and is now being processed by our team.
@@ -42,11 +42,11 @@ async function sendConfirmationEmail(to: string, applicantName: string, visaName
         Our visa experts will review your application within <strong>24 hours</strong>. Once approved, your eVisa will be sent to this email address.
       </p>
       <p style="color: #4b5563; font-size: 14px; margin-top: 32px; padding-top: 24px; border-top: 1px solid #e5e7eb;">
-        If you have any questions, please contact us at <a href="mailto:support@indiagovisa.com" style="color: #ea580c;">support@indiagovisa.com</a>
+        If you have any questions, please contact us at <a href="mailto:info@indiagovisa.com" style="color: #ea580c;">info@indiagovisa.com</a>
       </p>
     </div>
     <div style="background: #f3f4f6; padding: 16px 40px; text-align: center;">
-      <p style="color: #9ca3af; font-size: 12px; margin: 0;">© ${new Date().getFullYear()} IndiaGoVisa.com — All rights reserved</p>
+      <p style="color: #9ca3af; font-size: 12px; margin: 0;">Â© ${new Date().getFullYear()} IndiaGoVisa.com â All rights reserved</p>
     </div>
   </div>
 </body>
@@ -59,9 +59,9 @@ async function sendConfirmationEmail(to: string, applicantName: string, visaName
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'IndiaGoVisa <noreply@indiagovisa.com>',
+      from: 'IndiaGoVisa <info@indiagovisa.com>',
       to: [to],
-      subject: 'Payment Confirmed — Your Indian e-Visa Application',
+      subject: 'Payment Confirmed â Your Indian e-Visa Application',
       html,
     }),
   });
