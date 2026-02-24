@@ -14,7 +14,7 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/" onClick={() => window.scrollTo({top:0, behavior:'smooth'})} className="flex items-center space-x-2">
               <div className="bg-orange-600 p-2 rounded-lg">
                 <Plane className="h-6 w-6 text-white" />
               </div>
