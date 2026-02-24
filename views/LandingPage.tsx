@@ -9,7 +9,7 @@ const LandingPage: React.FC = () => {
       <section className="relative h-[80vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1524492707943-5da36594c836?auto=format&fit=crop&q=80&w=2000" 
+            src="/hero.webp" 
             alt="Taj Mahal" 
             className="w-full h-full object-cover brightness-50"
           />
@@ -157,7 +157,7 @@ const LandingPage: React.FC = () => {
           <p className="text-2xl font-bold mb-8 italic text-gray-700">
             "They caught a typo in my passport number that would have cost me my trip. Truly professional service!"
           </p>
-          <p className="font-bold text-gray-500">Ã¢ÂÂ Sarah M., United Kingdom</p>
+          <p className="font-bold text-gray-500">ÃÂ¢ÃÂÃÂ— Sarah M., United Kingdom</p>
         </div>
       </section>
     </div>
