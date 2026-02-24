@@ -157,7 +157,7 @@ const LandingPage: React.FC = () => {
           <p className="text-2xl font-bold mb-8 italic text-gray-700">
             "They caught a typo in my passport number that would have cost me my trip. Truly professional service!"
           </p>
-          <p className="font-bold text-gray-500">ÃÂ¢ÃÂÃÂ— Sarah M., United Kingdom</p>
+          <p className="font-bold text-gray-500"— Sarah M., United Kingdom</p>
         </div>
       </section>
     </div>
