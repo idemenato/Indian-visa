@@ -9,7 +9,7 @@ const LandingPage: React.FC = () => {
       <section className="relative h-[80vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="/hero.webp" 
+            src="https://images.unsplash.com/photo-1524492707943-5da36594c836?auto=format&fit=crop&q=80&w=2000" 
             alt="Taj Mahal" 
             className="w-full h-full object-cover brightness-50"
           />
