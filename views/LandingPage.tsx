@@ -109,9 +109,9 @@ const LandingPage: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { type: "30-Day Tourist", govFee: "$10 - $25", serviceFee: "$49", features: ["30 days validity", "Double entry", "24/7 Support", "Photo editing included"] },
+              { type: "30-Day Tourist", govFee: "$25", serviceFee: "$69", features: ["30 days validity", "Double entry", "24/7 Support", "Photo editing included"] },
               { type: "1-Year Tourist", govFee: "$40", serviceFee: "$69", recommended: true, features: ["365 days validity", "Multiple entry", "Priority processing", "WhatsApp support"] },
-              { type: "5-Year Tourist", govFee: "$80", serviceFee: "$99", features: ["5 years validity", "Multiple entry", "Free re-submission", "Travel guide included"] }
+              { type: "5-Year Tourist", govFee: "$160/$200/$484", serviceFee: "$69", features: ["5 years validity", "Multiple entry", "Free re-submission", "Travel guide included"] }
             ].map((plan, idx) => (
               <div key={idx} className={`bg-white p-10 rounded-3xl shadow-lg border-2 ${(plan as any).recommended ? 'border-orange-600' : 'border-transparent'} relative`}>
                 {(plan as any).recommended && (
