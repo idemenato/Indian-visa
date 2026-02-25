@@ -40,25 +40,220 @@ const MARITAL_STATUSES = ["DIVORCED","MARRIED","SINGLE"];
 const OCCUPATIONS = ["AIR FORCE","BUSINESS PERSON","CAMERAMAN","CHARITY/SOCIAL WORKER","CHARTERED ACCOUNTANT","COLLEGE/UNIVERSITY TEACHER","DEFENCE","DIPLOMAT","DOCTOR","ENGINEER","FILM PRODUCER","GOVERNMENT SERVICE","HOUSE WIFE","JOURNALIST","LABOUR","LAWYER","MEDIA","MILITARY","MISSIONARY","NAVY","NEWS BROADCASTER","OFFICIAL","OTHERS","PARAMILITARY","POLICE","PRESS","PRIVATE SERVICE","PUBLISHER","REPORTER","RESEARCHER","RETIRED","SEA MAN","SECURITY","SELF EMPLOYED/ FREELANCER","STUDENT","TRADER","TV PRODUCER","UN-EMPLOYED","UN OFFICIAL","WORKER","WRITER"];
 const PORTS_OF_ARRIVAL = ["AGATTI SEAPORT","AHMEDABAD AIRPORT","AMRITSAR AIRPORT","BAGDOGRA AIRPORT","BENGALURU AIRPORT","BHUBANESHWAR AIRPORT","CALICUT AIRPORT","CALICUT SEAPORT","CHANDIGARH AIRPORT","CHENNAI AIRPORT","CHENNAI SEAPORT","COCHIN AIRPORT","COCHIN SEAPORT","COIMBATORE AIRPORT","DELHI AIRPORT","GAYA AIRPORT","GOA AIRPORT (DABOLIM)","GOA AIRPORT (MOPA)","GOA SEAPORT","GUWAHATI AIRPORT","HYDERABAD AIRPORT","INDORE AIRPORT","JAIPUR AIRPORT","KAMARAJAR SEAPORT","KANDLA SEAPORT","KANNUR AIRPORT","KATTUPALI SEAPORT","KOLKATA AIRPORT","KOLKATA SEAPORT","LUCKNOW AIRPORT","MADURAI AIRPORT","MANGALORE AIRPORT","MANGALORE SEAPORT","MUMBAI AIRPORT","MUMBAI SEAPORT","MUNDRA SEAPORT","NAGPUR AIRPORT","NHAVA SHEVA SEAPORT","PORT BLAIR AIRPORT","PORT BLAIR SEAPORT","PUNE AIRPORT","RAXAUL LANDPORT","RUPAIDIHA LANDPORT","SURAT AIRPORT","TIRUCHIRAPALLI AIRPORT","TRIVANDRUM AIRPORT","VALLARPADAM SEAPORT","VARANASI AIRPORT","VIJAYAWADA AIRPORT","VISHAKHAPATNAM AIRPORT","VISHAKHAPATNAM SEAPORT"];
 const PORTS_OF_EXIT = ["AHMEDABAD AIRPORT","AMRITSAR AIRPORT","BAGDOGRA AIRPORT","BENGALURU AIRPORT","BHUBANESHWAR AIRPORT","CALICUT AIRPORT","CHANDIGARH AIRPORT","CHENNAI AIRPORT","COCHIN AIRPORT","COIMBATORE AIRPORT","DELHI AIRPORT","GAYA AIRPORT","GOA AIRPORT (DABOLIM)","GOA AIRPORT (MOPA)","GUWAHATI AIRPORT","HYDERABAD AIRPORT","INDORE AIRPORT","JAIPUR AIRPORT","KANNUR AIRPORT","KOLKATA AIRPORT","LUCKNOW AIRPORT","MADURAI AIRPORT","MANGALORE AIRPORT","MUMBAI AIRPORT","NAGPUR AIRPORT","PORT BLAIR AIRPORT","PUNE AIRPORT","SURAT AIRPORT","TIRUCHIRAPALLI AIRPORT","TRIVANDRUM AIRPORT","VARANASI AIRPORT","VIJAYAWADA AIRPORT","VISHAKHAPATNAM AIRPORT"];
-const VISA_SERVICES = [
-  { id: 'etourist_30', label: 'e-TOURIST VISA (for 30 Days)', price: '$49', category: 'eTOURIST VISA' },
-  { id: 'etourist_1y', label: 'e-TOURIST VISA (for 1 Year)', price: '$69', category: 'eTOURIST VISA' },
-  { id: 'etourist_5y', label: 'e-TOURIST VISA (for 5 Years)', price: '$99', category: 'eTOURIST VISA' },
-  { id: 'emedical', label: 'e-MEDICAL VISA', price: '$79', category: null },
-  { id: 'ebusiness', label: 'e-BUSINESS VISA', price: '$79', category: null },
-  { id: 'econference', label: 'e-CONFERENCE VISA', price: '$69', category: null },
-  { id: 'emedical_attendant', label: 'e-MEDICAL ATTENDANT VISA', price: '$59', category: null },
-  { id: 'eayush', label: 'e-AYUSH VISA', price: '$79', category: null },
-  { id: 'eayush_attendant', label: 'e-AYUSH ATTENDANT', price: '$59', category: null },
-  { id: 'estudent', label: 'e-STUDENT VISA', price: '$69', category: null },
-  { id: 'estudent_dependent', label: 'e-STUDENT DEPENDENT', price: '$69', category: null },
-  { id: 'eentry', label: 'e-ENTRY VISA', price: '$69', category: null },
-  { id: 'efilm', label: 'e-FILM VISA', price: '$79', category: null },
-  { id: 'emountaineering', label: 'e-MOUNTAINEERING VISA', price: '$69', category: null },
-  { id: 'etransit', label: 'e-TRANSIT VISA', price: '$49', category: null },
-  { id: 'eproduction', label: 'e-PRODUCTION INVESTMENT VISA', price: '$79', category: null },
-];
+const SERVICE_FEE = 69;
 
+const TOURIST_GOV_FEE = (nationality: string, duration: '30d' | '1y' | '5y'): number => {
+  if (duration === '30d') return 25;
+  if (duration === '1y') return 40;
+  const uk5y = ['United Kingdom', 'Gibraltar', 'Guernsey', 'Isle of Man', 'Jersey'];
+  if (uk5y.includes(nationality)) return 484;
+  if (nationality === 'United States Of America') return 160;
+  return 200;
+};
+
+const NON_TOURIST_GOV_FEE: Record<string, Record<string, number>> = {
+  "Albania":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Andorra":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Angola":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Anguilla":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Antigua & Barbuda":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Argentina":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Armenia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Aruba":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Australia":{"eb":215,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Austria":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Azerbaijan":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Bahamas":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Bahrain":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Bangladesh":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Barbados":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Belarus":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Belgium":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Belize":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Benin":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Bolivia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Bosnia & Herzegovina":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Botswana":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Brazil":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Brunei":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Bulgaria":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Burundi":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Cambodia":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Cameroon Republic":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Canada":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Cape Verde":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Cayman Island":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Chile":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Colombia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Comoros":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Cook Islands":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Costa Rica":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Cote D'Ivoire":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Croatia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Cuba":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Cyprus":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Czech Republic":{"eb":190,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Denmark":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Djibouti":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Dominica":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Dominican Republic":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "East Timor":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Ecuador":{"eb":240,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "El Salvador":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Equatorial Guinea":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Eritrea":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Estonia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Fiji":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Finland":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "France":{"eb":165,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Gabon":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Gambia":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Georgia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Germany":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Ghana":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Gibraltar":{"eb":242,"em":129,"ema":129,"ea":129,"eaa":129,"ec":129},
+  "Greece":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Grenada":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Guatemala":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Guernsey":{"eb":242,"em":129,"ema":129,"ea":129,"eaa":129,"ec":129},
+  "Guinea":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Guyana":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Haiti":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Honduras":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Hungary":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Iceland":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Indonesia":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Ireland":{"eb":200,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Isle of Man":{"eb":242,"em":129,"ema":129,"ea":129,"eaa":129,"ec":129},
+  "Israel":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Italy":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Jamaica":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Japan":{"eb":25,"em":25,"ema":25,"ea":25,"eaa":25,"ec":25},
+  "Jersey":{"eb":242,"em":129,"ema":129,"ea":129,"eaa":129,"ec":129},
+  "Jordan":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Kazakhstan":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Kenya":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Kiribati":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Kuwait":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Kyrgyzstan":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Laos":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Latvia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Lesotho":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Liberia":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Liechtenstein":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Lithuania":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Luxembourg":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Macedonia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Madagascar":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Malawi":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Malaysia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Mali":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Malta":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Marshall Islands":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Mauritania":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Mauritius":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Mexico":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Micronesia":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Moldova":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Monaco":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Mongolia":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Montenegro":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Montserrat":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Morocco":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Mozambique":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":220},
+  "Myanmar":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Namibia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Nauru":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Netherlands":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "New Zealand":{"eb":130,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Nicaragua":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Niger Republic":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Niue Island":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Norway":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Oman":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Palau":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Palestine":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Panama":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Papua New Guinea":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Paraguay":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Peru":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Philippines":{"eb":220,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Poland":{"eb":145,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Portugal":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Qatar":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Republic Of Korea":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Romania":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Russia":{"eb":120,"em":120,"ema":120,"ea":120,"eaa":120,"ec":40},
+  "Rwanda":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Saint Christopher And Nevis":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Saint Lucia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Saint Vincent And The Grenadines":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Samoa":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "San Marino":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Saudi Arabia":{"eb":215,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Senegal":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Serbia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Seychelles":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Sierra Leone":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Singapore":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Slovakia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Slovenia":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Solomon Islands":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "South Africa":{"eb":25,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Spain":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Sri Lanka":{"eb":80,"em":25,"ema":25,"ea":25,"eaa":25,"ec":25},
+  "Suriname":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Swaziland":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Sweden":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Switzerland":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Taiwan":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Tajikistan":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Tanzania":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Thailand":{"eb":200,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Togo":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Tonga":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Trinidad And Tobago":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Turks And Caicos":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Tuvalu":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Uganda":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Ukraine":{"eb":130,"em":85,"ema":85,"ea":85,"eaa":85,"ec":85},
+  "United Arab Emirates":{"eb":415,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "United Kingdom":{"eb":242,"em":129,"ema":129,"ea":129,"eaa":129,"ec":80},
+  "United States Of America":{"eb":140,"em":100,"ema":100,"ea":100,"eaa":100,"ec":100},
+  "Uruguay":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Uzbekistan":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Vanuatu":{"eb":0,"em":0,"ema":0,"ea":0,"eaa":0,"ec":0},
+  "Vatican City - Holy See":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Venezuela":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Vietnam":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Zambia":{"eb":0,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80},
+  "Zimbabwe":{"eb":120,"em":80,"ema":80,"ea":80,"eaa":80,"ec":80}
+};
+
+const getGovFee = (nationality: string, visaId: string): number => {
+  if (visaId === 'etourist_30') return TOURIST_GOV_FEE(nationality, '30d');
+  if (visaId === 'etourist_1y') return TOURIST_GOV_FEE(nationality, '1y');
+  if (visaId === 'etourist_5y') return TOURIST_GOV_FEE(nationality, '5y');
+  const keyMap: Record<string, string> = {
+    'ebusiness': 'eb', 'emedical': 'em', 'emedical_attendant': 'ema',
+    'econference': 'ec', 'eayush': 'ea', 'eayush_attendant': 'eaa',
+  };
+  const k = keyMap[visaId];
+  if (!k) return 0;
+  return NON_TOURIST_GOV_FEE[nationality]?.[k] ?? 80;
+};
+
+const VISA_SERVICES = [
+  { id: 'etourist_30', label: 'e-TOURIST VISA (for 30 Days)', category: 'eTOURIST VISA' },
+  { id: 'etourist_1y', label: 'e-TOURIST VISA (for 1 Year)', category: 'eTOURIST VISA' },
+  { id: 'etourist_5y', label: 'e-TOURIST VISA (for 5 Years)', category: 'eTOURIST VISA' },
+  { id: 'ebusiness', label: 'e-BUSINESS VISA', category: null },
+  { id: 'emedical', label: 'e-MEDICAL VISA', category: null },
+  { id: 'emedical_attendant', label: 'e-MEDICAL ATTENDANT VISA', category: null },
+  { id: 'econference', label: 'e-CONFERENCE VISA', category: null },
+  { id: 'eayush', label: 'e-AYUSH VISA', category: null },
+  { id: 'eayush_attendant', label: 'e-AYUSH ATTENDANT VISA', category: null },
+];
 const INDIA_STATES_DISTRICTS: Record<string, string[]> = {
   "ANDAMAN AND NICOBAR ISLANDS": ["NICOBAR","NORTH AND MIDDLE ANDAMAN","SOUTH ANDAMAN"],
   "ANDHRA PRADESH": ["ALLURI SITHARAMA RAJU","ANAKAPALLI","ANANTHAPURAMU","ANNAMAYYA","BAPATLA","CHITTOOR","DR. B.R. AMBEDKAR KONASEEMA","EAST GODAVARI","ELURU","GUNTUR","KADAPA","KAKINADA","KRISHNA","KURNOOL","MANYAM","NANDYAL","NTR","PALNADU","PARVATHIPURAM","PRAKASAM","SRI POTTI SRIRAMULU NELLORE","SRIKAKULAM","TIRUPATI","VISAKHAPATNAM","VIZIANAGARAM","WEST GODAVARI"],
@@ -446,7 +641,7 @@ const VisaForm: React.FC = () => {
                     <label key={v.id} className="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
                       <input type="radio" name="visaService" value={v.id} checked={formData.visaService === v.id} onChange={handleInputChange} className="text-orange-600" />
                       <span>{v.label}</span>
-                      <span className="ml-auto font-bold text-orange-600">{v.price}</span>
+                      <span className="ml-auto font-bold text-orange-600">{`${getGovFee(nationality, v.id) + SERVICE_FEE}`}</span>
                     </label>
                   ))}
                   <div className="border-t border-gray-200 pt-2 mt-2 space-y-2">
@@ -454,7 +649,7 @@ const VisaForm: React.FC = () => {
                       <label key={v.id} className="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
                         <input type="radio" name="visaService" value={v.id} checked={formData.visaService === v.id} onChange={handleInputChange} className="text-orange-600" />
                         <span>{v.label}</span>
-                        <span className="ml-auto font-bold text-orange-600">{v.price}</span>
+                        <span className="ml-auto font-bold text-orange-600">{`${getGovFee(nationality, v.id) + SERVICE_FEE}`}</span>
                       </label>
                     ))}
                   </div>
@@ -797,7 +992,10 @@ const VisaForm: React.FC = () => {
         );
 
       case 8:
-        const selectedService = VISA_SERVICES.find(v => v.id === formData.visaService);
+        const selectedService = VISA_SERVICES.find(s => s.id === formData.visaService);
+  const nationality = formData.nationality || '';
+  const govFee = selectedService ? getGovFee(nationality, selectedService.id) : 0;
+  const totalPrice = govFee + SERVICE_FEE;
         return (
           <div className="space-y-6 animate-in slide-in-from-right-4 duration-300">
             <div className="flex items-center space-x-2 text-orange-600 mb-4"><CheckCircle className="h-6 w-6" /><h3 className="text-xl font-bold">Review & Payment</h3></div>
@@ -845,7 +1043,7 @@ const VisaForm: React.FC = () => {
                 {isSubmitting ? (
                   <><RefreshCw className="h-5 w-5 animate-spin" /><span>Processing...</span></>
                 ) : (
-                  <><span>Proceed to Payment — {selectedService?.price}</span><ChevronRight className="h-5 w-5" /></>
+                  <><span>Proceed to Payment — ${totalPrice} USD</span><ChevronRight className="h-5 w-5" /></>
                 )}
               </button>
               <p className="text-center text-xs text-gray-500">
