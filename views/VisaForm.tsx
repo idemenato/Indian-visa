@@ -325,7 +325,7 @@ const SaarcCountryVisits: React.FC<{ entries: SaarcEntry[]; onChange: (e: SaarcE
           <span className="text-xs font-semibold text-gray-700">No. of visits<span className="text-red-500">*</span></span>
           <div className="flex space-x-2">
             <button type="button" onClick={addRow} className="text-orange-600 hover:text-orange-800 font-bold text-xl leading-none">+</button>
-            <button type="button" onClick={removeRow} className="text-orange-600 hover:text-orange-800 font-bold text-xl leading-none">ÃÂ¢ÃÂÃÂ</button>
+            <button type="button" onClick={removeRow} className="text-orange-600 hover:text-orange-800 font-bold text-xl leading-none">&minus;</button>
           </div>
         </div>
       </div>
@@ -439,7 +439,7 @@ const VisaForm: React.FC = () => {
     setSubmitError(null);
 
     try {
-      // 1. UloÃÂÃÂ¾iÃÂÃÂ¥ ÃÂÃÂ¾iadosÃÂÃÂ¥ do Supabase
+      // 1. UloÃÂÃÂÃÂÃÂ¾iÃÂÃÂÃÂÃÂ¥ ÃÂÃÂÃÂÃÂ¾iadosÃÂÃÂÃÂÃÂ¥ do Supabase
       const { data, error } = await supabase
         .from('visa_applications')
         .insert([{
@@ -531,7 +531,7 @@ const VisaForm: React.FC = () => {
 
       if (error) throw error;
 
-      // 2. VytvoriÃÂÃÂ¥ Stripe Checkout session
+      // 2. VytvoriÃÂÃÂÃÂÃÂ¥ Stripe Checkout session
       const res = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -539,6 +539,8 @@ const VisaForm: React.FC = () => {
           applicationId: data.id,
           visaService: formData.visaService,
           email: formData.email,
+          totalPrice: totalPrice,
+          nationality: formData.nationality || '',
         }),
       });
 
@@ -629,19 +631,18 @@ const VisaForm: React.FC = () => {
                     <p className="text-red-500 text-xs mt-1">Email addresses do not match.</p>
                   )}
                   {formData.reEnteredEmail && formData.email === formData.reEnteredEmail && (
-                    <p className="text-green-600 text-xs mt-1">ÃÂ¢ÃÂÃÂ Emails match.</p>
+                    <p className="text-green-600 text-xs mt-1">✓ Emails match.</p>
                   )}
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 items-start gap-4">
                 <label className={lbl + " mt-1"}>Visa Service<span className="text-red-500">*</span></label>
                 <div className="md:col-span-2 bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-2">
-                  <p className="font-bold text-xs text-gray-600 mb-2 uppercase tracking-wider">eTOURIST VISA</p>
                   {VISA_SERVICES.filter(v => v.category === 'eTOURIST VISA').map(v => (
                     <label key={v.id} className="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
                       <input type="radio" name="visaService" value={v.id} checked={formData.visaService === v.id} onChange={handleInputChange} className="text-orange-600" />
                       <span>{v.label}</span>
-                      <span className="ml-auto font-bold text-orange-600">{getGovFee(formData.nationality || '', v.id) + SERVICE_FEE}</span>
+                      <span className="ml-auto font-bold text-orange-600">${getGovFee(formData.nationality || '', v.id) + SERVICE_FEE}</span>
                     </label>
                   ))}
                   <div className="border-t border-gray-200 pt-2 mt-2 space-y-2">
@@ -649,7 +650,7 @@ const VisaForm: React.FC = () => {
                       <label key={v.id} className="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
                         <input type="radio" name="visaService" value={v.id} checked={formData.visaService === v.id} onChange={handleInputChange} className="text-orange-600" />
                         <span>{v.label}</span>
-                        <span className="ml-auto font-bold text-orange-600">{getGovFee(formData.nationality || '', v.id) + SERVICE_FEE}</span>
+                        <span className="ml-auto font-bold text-orange-600">${getGovFee(formData.nationality || '', v.id) + SERVICE_FEE}</span>
                       </label>
                     ))}
                   </div>
@@ -986,7 +987,7 @@ const VisaForm: React.FC = () => {
             </div>
             <div className="max-w-2xl mx-auto bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800">
               <Info className="h-4 w-4 inline mr-2" />
-              Photos will be reviewed by our experts. Don't worry if they're not perfect ÃÂ¢ÃÂÃÂ we'll help you fix any issues before submission.
+              Photos will be reviewed by our experts. Don't worry if they're not perfect — we'll help you fix any issues before submission.
             </div>
           </div>
         );
@@ -1020,15 +1021,15 @@ const VisaForm: React.FC = () => {
                 <div className="border-t border-gray-200 mt-4 pt-4">
                   <div className="flex justify-between text-sm text-gray-600 mb-1">
                     <span>Government fee</span>
-                    <span>{govFee}</span>
+                    <span>${govFee}</span>
                   </div>
                   <div className="flex justify-between text-sm text-gray-600 mb-2">
                     <span>Service fee</span>
-                    <span>{SERVICE_FEE}</span>
+                    <span>${SERVICE_FEE}</span>
                   </div>
                   <div className="flex justify-between items-center border-t border-gray-100 pt-2">
-                    <span className="font-bold text-lg">Total</span>
-                    <span className="text-2xl font-bold text-orange-600">{totalPrice}</span>
+                    <span className="font-bold text-lg">Total amount to be paid</span>
+                    <span className="text-2xl font-bold text-orange-600">${totalPrice}</span>
                   </div>
                 </div>
               </div>
@@ -1050,11 +1051,11 @@ const VisaForm: React.FC = () => {
                 {isSubmitting ? (
                   <><RefreshCw className="h-5 w-5 animate-spin" /><span>Processing...</span></>
                 ) : (
-                  <><span>Proceed to Payment ÃÂ¢ÃÂÃÂ ${totalPrice} USD</span><ChevronRight className="h-5 w-5" /></>
+                  <><span>Proceed to Payment → ${totalPrice} USD</span><ChevronRight className="h-5 w-5" /></>
                 )}
               </button>
               <p className="text-center text-xs text-gray-500">
-                ÃÂ°ÃÂÃÂÃÂ Secure payment via Stripe. Your card details are never stored on our servers.
+                🔒 Secure payment via Stripe. Your card details are never stored on our servers.
               </p>
             </div>
           </div>
