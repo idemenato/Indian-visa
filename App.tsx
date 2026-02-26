@@ -70,8 +70,7 @@ const Footer: React.FC = () => (
             <span className="text-2xl font-bold text-white">IndiaGoVisa.com</span>
           </div>
           <p className="max-w-md text-gray-400 leading-relaxed mb-6">
-            We are a dedicated visa consultancy service helping travelers worldwide experience the magic of India. 
-            Our mission is to replace governmental complexity with simple, human-centered service.
+            We are a dedicated visa consultancy service helping travelers worldwide experience the magic of India. Our mission is to replace governmental complexity with simple, human-centered service. We have no control over how quickly applications are processed. The official website is exclusively indianvisaonline.gov.in. Do not trust sites that promise faster processing for an extra fee.
           </p>
         </div>
         <div>
