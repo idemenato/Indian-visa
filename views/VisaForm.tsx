@@ -325,7 +325,7 @@ const SaarcCountryVisits: React.FC<{ entries: SaarcEntry[]; onChange: (e: SaarcE
           <span className="text-xs font-semibold text-gray-700">No. of visits<span className="text-red-500">*</span></span>
           <div className="flex space-x-2">
             <button type="button" onClick={addRow} className="text-orange-600 hover:text-orange-800 font-bold text-xl leading-none">+</button>
-            <button type="button" onClick={removeRow} className="text-orange-600 hover:text-orange-800 font-bold text-xl leading-none">â</button>
+            <button type="button" onClick={removeRow} className="text-orange-600 hover:text-orange-800 font-bold text-xl leading-none">Ã¢ÂÂ</button>
           </div>
         </div>
       </div>
@@ -439,7 +439,7 @@ const VisaForm: React.FC = () => {
     setSubmitError(null);
 
     try {
-      // 1. UloÅ¾iÅ¥ Å¾iadosÅ¥ do Supabase
+      // 1. UloÃÂ¾iÃÂ¥ ÃÂ¾iadosÃÂ¥ do Supabase
       const { data, error } = await supabase
         .from('visa_applications')
         .insert([{
@@ -531,7 +531,7 @@ const VisaForm: React.FC = () => {
 
       if (error) throw error;
 
-      // 2. VytvoriÅ¥ Stripe Checkout session
+      // 2. VytvoriÃÂ¥ Stripe Checkout session
       const res = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -629,7 +629,7 @@ const VisaForm: React.FC = () => {
                     <p className="text-red-500 text-xs mt-1">Email addresses do not match.</p>
                   )}
                   {formData.reEnteredEmail && formData.email === formData.reEnteredEmail && (
-                    <p className="text-green-600 text-xs mt-1">â Emails match.</p>
+                    <p className="text-green-600 text-xs mt-1">Ã¢ÂÂ Emails match.</p>
                   )}
                 </div>
               </div>
@@ -986,7 +986,7 @@ const VisaForm: React.FC = () => {
             </div>
             <div className="max-w-2xl mx-auto bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800">
               <Info className="h-4 w-4 inline mr-2" />
-              Photos will be reviewed by our experts. Don't worry if they're not perfect â we'll help you fix any issues before submission.
+              Photos will be reviewed by our experts. Don't worry if they're not perfect Ã¢ÂÂ we'll help you fix any issues before submission.
             </div>
           </div>
         );
@@ -1020,15 +1020,15 @@ const VisaForm: React.FC = () => {
                 <div className="border-t border-gray-200 mt-4 pt-4">
                   <div className="flex justify-between text-sm text-gray-600 mb-1">
                     <span>Government fee</span>
-                    <span>${govFee}</span>
+                    <span>{govFee}</span>
                   </div>
                   <div className="flex justify-between text-sm text-gray-600 mb-2">
                     <span>Service fee</span>
-                    <span>${SERVICE_FEE}</span>
+                    <span>{SERVICE_FEE}</span>
                   </div>
                   <div className="flex justify-between items-center border-t border-gray-100 pt-2">
                     <span className="font-bold text-lg">Total</span>
-                    <span className="text-2xl font-bold text-orange-600">${totalPrice}</span>
+                    <span className="text-2xl font-bold text-orange-600">{totalPrice}</span>
                   </div>
                 </div>
               </div>
@@ -1050,11 +1050,11 @@ const VisaForm: React.FC = () => {
                 {isSubmitting ? (
                   <><RefreshCw className="h-5 w-5 animate-spin" /><span>Processing...</span></>
                 ) : (
-                  <><span>Proceed to Payment â ${totalPrice} USD</span><ChevronRight className="h-5 w-5" /></>
+                  <><span>Proceed to Payment Ã¢ÂÂ ${totalPrice} USD</span><ChevronRight className="h-5 w-5" /></>
                 )}
               </button>
               <p className="text-center text-xs text-gray-500">
-                ð Secure payment via Stripe. Your card details are never stored on our servers.
+                Ã°ÂÂÂ Secure payment via Stripe. Your card details are never stored on our servers.
               </p>
             </div>
           </div>
