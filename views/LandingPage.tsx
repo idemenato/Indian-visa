@@ -1,6 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Zap, Clock, CheckCircle2, Star, Quote } from 'lucide-react';
+
+
+const ReviewsCarousel: React.FC = () => {
+  const reviews = [{"text":"They caught a typo in my passport number that would have cost me my trip. Truly professional service!","author":"Sarah M., United Kingdom"},{"text":"My visa application was rejected without explanation, so I turned to Indiagovisa, and they helped me get the visa on the first try, completely stress-free. Thank you guys!","author":"Luís F., Spain"},{"text":"I wasn't sure how to upload my photos in the required format, so I decided to let the professionals handle it. By the end of the same day, everything was done and my visa application was submitted.","author":"Lucia S., Slovakia"},{"text":"Indiagovisa saved me hours of time! The official website kept crashing no matter what I tried. Here, I got it done in just a few minutes without any issues. Great experience - I'll gladly use your service again!","author":"Adamo K., Italy"}];
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(prev => (prev + 1) % reviews.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [reviews.length]);
+
+  return (
+    <div className="relative">
+      <div className="overflow-hidden">
+        <div
+          className="flex transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${current * 100}%)` }}
+        >
+          {reviews.map((r, i) => (
+            <div key={i} className="min-w-full px-4 text-center">
+              <div className="flex justify-center space-x-1 mb-6">
+                {[1,2,3,4,5].map(s => <Star key={s} className="h-6 w-6 text-yellow-400 fill-current" />)}
+              </div>
+              <p className="text-2xl font-bold mb-8 italic text-gray-700 max-w-3xl mx-auto">"{r.text}"</p>
+              <p className="font-bold text-gray-500">— {r.author}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-center space-x-2 mt-8">
+        {reviews.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`h-3 w-3 rounded-full transition-all ${i === current ? 'bg-orange-600 w-6' : 'bg-gray-300'}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const LandingPage: React.FC = () => {
   return (
@@ -86,7 +129,7 @@ const LandingPage: React.FC = () => {
             <div className="w-full md:w-1/2 text-white">
               <h2 className="text-3xl md:text-5xl font-bold mb-8 italic" style={{fontFamily: "'Playfair Display', serif"}}>"I've been in your shoes..."</h2>
               <p className="text-xl mb-6 text-orange-100 leading-relaxed">
-                Hi, I'm Daniela. When I first planned my trip to India from Europe, I spent 6 hours trying to navigate the official visa website. It crashed twice, rejected my photos without explanation, and left me feeling anxious about my trip.
+                Hi, I'm Daniela. When I first planned my trip to India from Europe, I spent six hours trying to navigate the official visa website. It crashed every few minutes, saved nothing, rejected my photos without explanation, and left me feeling anxious about my entire trip.
               </p>
               <p className="text-xl mb-10 text-orange-100 leading-relaxed">
                 I realized that travelers need a bridge. That's why I started IndiaGoVisa.com. We are based in the EU but work with experts globally to ensure your Indian adventure starts with excitement, not paperwork stress.
@@ -148,16 +191,11 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Review */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex justify-center space-x-1 mb-6">
-            {[1, 2, 3, 4, 5].map(i => <Star key={i} className="h-6 w-6 text-yellow-400 fill-current" />)}
-          </div>
-          <p className="text-2xl font-bold mb-8 italic text-gray-700">
-            "They caught a typo in my passport number that would have cost me my trip. Truly professional service!"
-          </p>
-          <p className="font-bold text-gray-500">— Sarah M., United Kingdom</p>
+      {/* Reviews Carousel */}
+      <section className="py-24 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-5xl font-bold mb-12 text-center" style={{fontFamily: "'Playfair Display', serif"}}>What Our Customers Say</h2>
+          <ReviewsCarousel />
         </div>
       </section>
     </div>
