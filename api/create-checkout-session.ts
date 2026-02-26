@@ -27,8 +27,9 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { applicationId, visaService, email } = req.body;
-    const amount = PRICES[visaService] || 4900;
+    const { applicationId, visaService, email, totalPrice, nationality } = req.body;
+    // Use totalPrice from frontend (gov fee + service fee), fallback to PRICES
+    const amount = totalPrice ? Math.round(totalPrice * 100) : (PRICES[visaService] || 4900);
 
     const serviceNames: Record<string, string> = {
       etourist_30: 'e-Tourist Visa (30 Days)',
@@ -56,7 +57,7 @@ export default async function handler(req: any, res: any) {
           currency: 'usd',
           product_data: {
             name: `Indian ${serviceNames[visaService] || 'e-Visa'}`,
-            description: 'IndiaGoVisa.com — Professional visa application service',
+            description: 'IndiaGoVisa.com â Professional visa application service',
           },
           unit_amount: amount,
         },
