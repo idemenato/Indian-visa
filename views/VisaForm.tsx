@@ -325,7 +325,7 @@ const SaarcCountryVisits: React.FC<{ entries: SaarcEntry[]; onChange: (e: SaarcE
           <span className="text-xs font-semibold text-gray-700">No. of visits<span className="text-red-500">*</span></span>
           <div className="flex space-x-2">
             <button type="button" onClick={addRow} className="text-orange-600 hover:text-orange-800 font-bold text-xl leading-none">+</button>
-            <button type="button" onClick={removeRow} className="text-orange-600 hover:text-orange-800 font-bold text-xl leading-none">Ã¢ÂÂ</button>
+            <button type="button" onClick={removeRow} className="text-orange-600 hover:text-orange-800 font-bold text-xl leading-none">ÃÂ¢ÃÂÃÂ</button>
           </div>
         </div>
       </div>
@@ -439,7 +439,7 @@ const VisaForm: React.FC = () => {
     setSubmitError(null);
 
     try {
-      // 1. UloÃÂ¾iÃÂ¥ ÃÂ¾iadosÃÂ¥ do Supabase
+      // 1. UloÃÂÃÂ¾iÃÂÃÂ¥ ÃÂÃÂ¾iadosÃÂÃÂ¥ do Supabase
       const { data, error } = await supabase
         .from('visa_applications')
         .insert([{
@@ -531,7 +531,7 @@ const VisaForm: React.FC = () => {
 
       if (error) throw error;
 
-      // 2. VytvoriÃÂ¥ Stripe Checkout session
+      // 2. VytvoriÃÂÃÂ¥ Stripe Checkout session
       const res = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -629,7 +629,7 @@ const VisaForm: React.FC = () => {
                     <p className="text-red-500 text-xs mt-1">Email addresses do not match.</p>
                   )}
                   {formData.reEnteredEmail && formData.email === formData.reEnteredEmail && (
-                    <p className="text-green-600 text-xs mt-1">Ã¢ÂÂ Emails match.</p>
+                    <p className="text-green-600 text-xs mt-1">ÃÂ¢ÃÂÃÂ Emails match.</p>
                   )}
                 </div>
               </div>
@@ -641,7 +641,7 @@ const VisaForm: React.FC = () => {
                     <label key={v.id} className="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
                       <input type="radio" name="visaService" value={v.id} checked={formData.visaService === v.id} onChange={handleInputChange} className="text-orange-600" />
                       <span>{v.label}</span>
-                      <span className="ml-auto font-bold text-orange-600">{`${getGovFee(nationality, v.id) + SERVICE_FEE}`}</span>
+                      <span className="ml-auto font-bold text-orange-600">{getGovFee(formData.nationality || '', v.id) + SERVICE_FEE}</span>
                     </label>
                   ))}
                   <div className="border-t border-gray-200 pt-2 mt-2 space-y-2">
@@ -649,7 +649,7 @@ const VisaForm: React.FC = () => {
                       <label key={v.id} className="flex items-center space-x-2 text-xs text-gray-700 cursor-pointer">
                         <input type="radio" name="visaService" value={v.id} checked={formData.visaService === v.id} onChange={handleInputChange} className="text-orange-600" />
                         <span>{v.label}</span>
-                        <span className="ml-auto font-bold text-orange-600">{`${getGovFee(nationality, v.id) + SERVICE_FEE}`}</span>
+                        <span className="ml-auto font-bold text-orange-600">{getGovFee(formData.nationality || '', v.id) + SERVICE_FEE}</span>
                       </label>
                     ))}
                   </div>
@@ -986,7 +986,7 @@ const VisaForm: React.FC = () => {
             </div>
             <div className="max-w-2xl mx-auto bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800">
               <Info className="h-4 w-4 inline mr-2" />
-              Photos will be reviewed by our experts. Don't worry if they're not perfect Ã¢ÂÂ we'll help you fix any issues before submission.
+              Photos will be reviewed by our experts. Don't worry if they're not perfect ÃÂ¢ÃÂÃÂ we'll help you fix any issues before submission.
             </div>
           </div>
         );
@@ -1050,11 +1050,11 @@ const VisaForm: React.FC = () => {
                 {isSubmitting ? (
                   <><RefreshCw className="h-5 w-5 animate-spin" /><span>Processing...</span></>
                 ) : (
-                  <><span>Proceed to Payment Ã¢ÂÂ ${totalPrice} USD</span><ChevronRight className="h-5 w-5" /></>
+                  <><span>Proceed to Payment ÃÂ¢ÃÂÃÂ ${totalPrice} USD</span><ChevronRight className="h-5 w-5" /></>
                 )}
               </button>
               <p className="text-center text-xs text-gray-500">
-                Ã°ÂÂÂ Secure payment via Stripe. Your card details are never stored on our servers.
+                ÃÂ°ÃÂÃÂÃÂ Secure payment via Stripe. Your card details are never stored on our servers.
               </p>
             </div>
           </div>
