@@ -24,13 +24,13 @@ const Header: React.FC = () => {
           
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-gray-600 hover:text-orange-600 font-medium">Home</Link>
+            <a href="#pricing" className="text-gray-600 hover:text-orange-600 font-medium">Travel Visas</a>
             <a href="#benefits" className="text-gray-600 hover:text-orange-600 font-medium">Why Us</a>
-            <a href="#pricing" className="text-gray-600 hover:text-orange-600 font-medium">Fees</a>
             <Link 
               to="/apply" 
               className="bg-orange-600 text-white px-6 py-2.5 rounded-full font-semibold hover:bg-orange-700 transition-all shadow-md hover:shadow-lg"
             >
-              Apply Online
+              Apply Now
             </Link>
           </div>
 
@@ -45,8 +45,8 @@ const Header: React.FC = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 py-4 px-6 space-y-4 absolute w-full shadow-lg">
           <Link to="/" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>Home</Link>
+          <a href="#pricing" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>Travel Visas</a>
           <a href="#benefits" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>Why Us</a>
-          <a href="#pricing" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>Fees</a>
           <Link 
             to="/apply" 
             className="block bg-orange-600 text-white px-6 py-3 rounded-xl text-center font-bold"
