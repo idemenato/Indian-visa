@@ -57,7 +57,7 @@ export default async function handler(req: any, res: any) {
           currency: 'usd',
           product_data: {
             name: `Indian ${serviceNames[visaService] || 'e-Visa'}`,
-            description: 'IndiaGoVisa.com â Professional visa application service',
+            description: 'IndiaGoVisa.com - Professional visa application service',
           },
           unit_amount: amount,
         },
