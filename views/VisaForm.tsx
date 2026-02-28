@@ -439,7 +439,7 @@ const VisaForm: React.FC = () => {
     setSubmitError(null);
 
     try {
-      // 1. UloÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¾iÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¥ ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¾iadosÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¥ do Supabase
+      // 1. Uloi iados do Supabase
       const { data, error } = await supabase
         .from('visa_applications')
         .insert([{
@@ -531,7 +531,7 @@ const VisaForm: React.FC = () => {
 
       if (error) throw error;
 
-      // 2. VytvoriÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¥ Stripe Checkout session
+      // 2. Vytvori Stripe Checkout session
       const res = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -631,7 +631,7 @@ const VisaForm: React.FC = () => {
                     <p className="text-red-500 text-xs mt-1">Email addresses do not match.</p>
                   )}
                   {formData.reEnteredEmail && formData.email === formData.reEnteredEmail && (
-                    <p className="text-green-600 text-xs mt-1">â Emails match.</p>
+                    <p className="text-green-600 text-xs mt-1">✓ Emails match.</p>
                   )}
                 </div>
               </div>
@@ -987,7 +987,7 @@ const VisaForm: React.FC = () => {
             </div>
             <div className="max-w-2xl mx-auto bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm text-blue-800">
               <Info className="h-4 w-4 inline mr-2" />
-              Photos will be reviewed by our experts. Don't worry if they're not perfect â we'll help you fix any issues before submission.
+              Photos will be reviewed by our experts. Don't worry if they're not perfect - we'll help you fix any issues before submission.
             </div>
           </div>
         );
@@ -1051,11 +1051,11 @@ const VisaForm: React.FC = () => {
                 {isSubmitting ? (
                   <><RefreshCw className="h-5 w-5 animate-spin" /><span>Processing...</span></>
                 ) : (
-                  <><span>Proceed to Payment â ${totalPrice} USD</span><ChevronRight className="h-5 w-5" /></>
+                  <><span>Proceed to Payment -> ${totalPrice} USD</span><ChevronRight className="h-5 w-5" /></>
                 )}
               </button>
               <p className="text-center text-xs text-gray-500">
-                ð Secure payment via Stripe. Your card details are never stored on our servers.
+                 Secure payment via Stripe. Your card details are never stored on our servers.
               </p>
             </div>
           </div>
