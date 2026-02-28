@@ -52,7 +52,7 @@ const Header: React.FC = () => {
             className="block bg-orange-600 text-white px-6 py-3 rounded-xl text-center font-bold"
             onClick={() => setIsOpen(false)}
           >
-            Apply Online
+            Apply Now
           </Link>
         </div>
       )}
