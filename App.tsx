@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import LandingPage from './views/LandingPage';
 import VisaForm from './views/VisaForm';
 import SuccessPage from './views/SuccessPage';
+import TravelVisas from './views/TravelVisas';
 import { Plane, Menu, X } from 'lucide-react';
 
 const Header: React.FC = () => {
@@ -24,7 +25,7 @@ const Header: React.FC = () => {
           
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-gray-600 hover:text-orange-600 font-medium">Home</Link>
-            <a href="#pricing" className="text-gray-600 hover:text-orange-600 font-medium">Travel Visas</a>
+            <Link to="/visas" className="text-gray-600 hover:text-orange-600 font-medium">Travel Visas</Link>
             <a href="#benefits" className="text-gray-600 hover:text-orange-600 font-medium">Why Us</a>
             <Link 
               to="/apply" 
@@ -45,7 +46,7 @@ const Header: React.FC = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 py-4 px-6 space-y-4 absolute w-full shadow-lg">
           <Link to="/" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>Home</Link>
-          <a href="#pricing" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>Travel Visas</a>
+          <Link to="/visas" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>Travel Visas</Link>
           <a href="#benefits" className="block text-gray-600 font-medium" onClick={() => setIsOpen(false)}>Why Us</a>
           <Link 
             to="/apply" 
@@ -110,6 +111,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/apply" element={<VisaForm />} />
+          <Route path="/visas" element={<TravelVisas />} />
             <Route path="/success" element={<SuccessPage />} />
           </Routes>
         </main>
