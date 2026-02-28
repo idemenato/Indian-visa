@@ -631,7 +631,7 @@ const VisaForm: React.FC = () => {
                     <p className="text-red-500 text-xs mt-1">Email addresses do not match.</p>
                   )}
                   {formData.reEnteredEmail && formData.email === formData.reEnteredEmail && (
-                    <p className="text-green-600 text-xs mt-1">â Emails match.</p>
+                    <p className="text-green-600 text-xs mt-1"> Emails match.</p>
                   )}
                 </div>
               </div>
